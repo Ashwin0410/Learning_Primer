@@ -1,0 +1,33 @@
+# Render Blueprint — provisions a web service (Docker) + a PostgreSQL database.
+# In Render: New ▸ Blueprint ▸ connect this repo. Render reads this file.
+databases:
+  - name: primer-db
+    databaseName: primer
+    user: primer
+    plan: free # change to a paid plan for guaranteed long-term persistence
+
+services:
+  - type: web
+    name: primer
+    runtime: docker
+    plan: free # free web services sleep after ~15 min idle (slow first load); Starter keeps it awake
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
+    healthCheckPath: /api/health
+    autoDeploy: true
+    envVars:
+      # Postgres connection string, injected automatically from the database above.
+      - key: DATABASE_URL
+        fromDatabase:
+          name: primer-db
+          property: connectionString
+      # Secrets — you set these in the Render dashboard (never committed to git).
+      - key: ANTHROPIC_API_KEY
+        sync: false
+      - key: PRIMER_PASSCODE
+        sync: false
+      # Plain config.
+      - key: LEARNER_NAME
+        value: Prakruthi
+      - key: PRIMER_MODEL
+        value: claude-opus-4-8 # switch to claude-sonnet-5 to cut cost ~5x for heavy use

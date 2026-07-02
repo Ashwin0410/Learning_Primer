@@ -1,0 +1,13 @@
+# Keep the build context lean AND keep secrets/dev data out of the image.
+**/__pycache__
+**/*.pyc
+backend/.venv
+backend/.env
+backend/primer.db
+backend/*.db
+frontend/node_modules
+frontend/dist
+.git
+.gitignore
+*.md
+start-dev.ps1

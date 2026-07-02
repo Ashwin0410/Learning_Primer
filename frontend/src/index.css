@@ -1,0 +1,174 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: light;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  @apply bg-cream text-ink font-sans antialiased;
+}
+
+/* Calm, thin scrollbars. */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #d8d3ca transparent;
+}
+*::-webkit-scrollbar {
+  width: 9px;
+  height: 9px;
+}
+*::-webkit-scrollbar-thumb {
+  background: #d8d3ca;
+  border-radius: 9999px;
+  border: 2px solid transparent;
+  background-clip: content-box;
+}
+
+/* ---- Lesson content (rendered Markdown) ---- */
+.lesson {
+  @apply text-[15px] leading-7 text-slate-700;
+}
+.lesson > *:first-child {
+  margin-top: 0;
+}
+.lesson > *:last-child {
+  margin-bottom: 0;
+}
+.lesson h1 {
+  @apply text-2xl font-bold text-ink mt-6 mb-3;
+}
+.lesson h2 {
+  @apply text-xl font-bold text-ink mt-6 mb-3;
+}
+.lesson h3 {
+  @apply text-lg font-semibold text-ink mt-5 mb-2;
+}
+.lesson h4 {
+  @apply text-base font-semibold text-ink mt-4 mb-2;
+}
+.lesson p {
+  @apply my-3;
+}
+.lesson ul {
+  @apply my-3 list-disc pl-6 space-y-1.5;
+}
+.lesson ol {
+  @apply my-3 list-decimal pl-6 space-y-1.5;
+}
+.lesson li {
+  @apply pl-1;
+}
+.lesson a {
+  @apply text-indigo-600 font-medium underline decoration-indigo-300 underline-offset-2 hover:decoration-indigo-500;
+}
+.lesson strong {
+  @apply font-semibold text-ink;
+}
+.lesson blockquote {
+  @apply border-l-4 border-indigo-200 bg-indigo-50/50 rounded-r-lg pl-4 pr-3 py-2 my-4 text-slate-600 italic;
+}
+.lesson hr {
+  @apply my-6 border-slate-200;
+}
+.lesson table {
+  @apply my-4 w-full text-sm border-collapse overflow-hidden rounded-lg;
+}
+.lesson thead {
+  @apply bg-slate-100;
+}
+.lesson th {
+  @apply text-left font-semibold text-ink px-3 py-2 border border-slate-200;
+}
+.lesson td {
+  @apply px-3 py-2 border border-slate-200 align-top;
+}
+/* Inline code (block code is handled by the syntax highlighter). */
+.lesson :not(pre) > code {
+  @apply bg-indigo-50 text-indigo-700 font-mono text-[0.85em] px-1.5 py-0.5 rounded-md;
+}
+
+.typing-cursor::after {
+  content: "▍";
+  @apply text-indigo-400 animate-blink ml-0.5;
+}
+
+/* ---- Decorative page background (soft glows + faint dot grid) ---- */
+.deco::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  background:
+    radial-gradient(46rem 46rem at 100% -8%, rgba(139, 92, 246, 0.13), transparent 60%),
+    radial-gradient(40rem 40rem at -8% 4%, rgba(99, 102, 241, 0.1), transparent 58%),
+    radial-gradient(38rem 38rem at 50% 120%, rgba(236, 72, 153, 0.07), transparent 55%);
+  pointer-events: none;
+}
+.deco::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  opacity: 0.5;
+  background-image: radial-gradient(rgba(31, 34, 51, 0.05) 1px, transparent 1px);
+  background-size: 22px 22px;
+  pointer-events: none;
+}
+
+/* ---- Shimmer skeletons ---- */
+.shimmer {
+  background: linear-gradient(90deg, #eeeae3 25%, #f7f4ee 37%, #eeeae3 63%);
+  background-size: 400% 100%;
+  animation: shimmer 1.4s ease infinite;
+}
+@keyframes shimmer {
+  0% {
+    background-position: 100% 0;
+  }
+  100% {
+    background-position: 0 0;
+  }
+}
+
+/* ---- Streak toast ---- */
+@keyframes toast-in {
+  0% {
+    opacity: 0;
+    transform: translateY(-14px) scale(0.96);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+.animate-toast {
+  animation: toast-in 0.4s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+
+/* ---- Confetti ---- */
+.confetti-piece {
+  position: absolute;
+  top: -8vh;
+  border-radius: 2px;
+  animation-name: confetti-fall;
+  animation-timing-function: linear;
+  animation-fill-mode: forwards;
+}
+@keyframes confetti-fall {
+  0% {
+    transform: translateY(-8vh) rotate(0deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(112vh) rotate(720deg);
+    opacity: 0;
+  }
+}
